@@ -1,0 +1,17 @@
+version: "3.8"
+name: 'config-mount'
+services:
+  server:
+    image: ubuntu:22.04
+
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - "sleep infinity"
+    configs:
+      - source: password
+        target: /root/web_password.txt
+configs:
+  password:
+    file: ./password.txt
+

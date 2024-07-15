@@ -1,0 +1,19 @@
+version: "3.8"
+name:  'network-alias'
+services:
+  ubuntu:
+    image:  ubuntu:22.04 
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - sleep infinity
+    networks:
+      p2:
+        aliases:
+          - server
+
+networks:
+  p2:
+    #name: "private"
+    #external: true
+

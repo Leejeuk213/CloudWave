@@ -1,0 +1,52 @@
+version: "3.8"
+name: 'test_gitsync_ide'
+services:
+  GitSync:
+    image: registry.k8s.io/git-sync/git-sync:v4.1.0
+    volumes:
+      - v2:/tmp
+    environment:
+      - GITSYNC_REPO=https://github.com/matenduel/cloudwave
+      - GITSYNC_ROOT=/tmp/git
+      - GITSYNC_REF=main
+      - GITSYNC_DEPTH=1
+    profiles:
+      - init
+  ide:
+    image: dlwpdnr213/cloudwave:practice.v1
+    
+    environment:
+      FILE__PASSWORD: /run/secrets/code_server_password
+    env_file: 
+      - .env
+
+    secrets:
+      - source: code_server_password
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - v1:/code/local
+      - v2:/code/remote
+      - config:/config
+    depends_on:
+      GitSync:
+        condition:  service_started
+
+    ports:
+      - "8444:8443"
+
+
+
+
+secrets:
+  code_server_password:
+    file: ./password.txt
+volumes:
+  v1:
+    name: local_code
+    external: true
+  v2 :
+    name: remote_code
+    external: true
+  config :
+    name : config
+    external: true

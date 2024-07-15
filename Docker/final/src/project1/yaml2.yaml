@@ -1,0 +1,17 @@
+version: "3.8"
+name:  'network-across-project-2'
+services:
+  nginx:
+    image:  nginx:latest
+    ports:
+      - "80:80"
+    networks:
+      p2:
+        aliases:
+          - web
+
+networks:
+  p2:
+    name: "across_project"
+    external: true
+

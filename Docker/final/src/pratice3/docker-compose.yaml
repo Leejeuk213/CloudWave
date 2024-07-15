@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  ubuntu:
+    image:  cloudwave:example.1 
+    build:
+      #dockerfile_inline: |
+      #  FROM ubuntu:22.04
+      #  RUN apt-get update && apt-get upgrade
+      # Or Use `dockerfile`
+      dockerfile: "./Dockerfile"
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - "sleep 3600"
+    restart: no
+  nginx:
+    image: nginx:latest
+    ports:
+      - "85:80"
+    restart: always
+

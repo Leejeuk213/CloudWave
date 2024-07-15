@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  ubuntu:
+    container_name: server
+    build:
+      context: ..
+      dockerfile_inline: |
+        FROM ubuntu:22.04
+        RUN apt-get update && apt-get upgrade && apt-get install -y curl
+
+    image: cloudwave/compose:inline_build.v1
+  
+    restart: no
+  nginx:
+    image: nginx:latest
+    expose:
+      - 80
+    restart: always
+

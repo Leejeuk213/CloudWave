@@ -1,0 +1,13 @@
+version: "3.8"
+name: 'volume-external2'
+services:
+  other:
+    image:  ubuntu:22.04 
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - sleep infinity
+    volumes_from:
+      - container:ex3-master-1:rw
+  
+

@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  ubuntu:
+    image: ubuntu:22.04
+    
+    entrypoint: /bin/bash
+    command:
+      - -c
+      #- echo 'env from "$FROM"'
+      - echo 'env from ${FROM}' && echo env from $${FROM} && echo 'env from ${BY:-default}'&& echo env from $UBUNTU_VERSION && echo env from $${UBUNTU_VERSION}
+    environment:
+      - FROM="env definition"
+      - UBUNTU_VERSION="hello"
+    restart: no

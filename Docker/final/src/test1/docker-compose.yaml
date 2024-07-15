@@ -1,0 +1,28 @@
+version: "3.8"
+name: 'test_ide'
+services:
+  ide:
+    image: dlwpdnr213/cloudwave:practice.v1
+    environment:
+      FILE__PASSWORD: /run/secrets/code_server_password
+      #working_dir: $DEFAULT_WORKSPACE
+    env_file: 
+      - .env
+    # entrypoint: /bin/bash
+    # command: 
+    #   - -c
+    #   - "sleep infinity"
+    secrets:
+      - source: code_server_password
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - v1:/code/local
+    ports:
+      - "8443:8443"
+secrets:
+  code_server_password:
+    file: ./password.txt
+volumes:
+  v1:
+    name: local_code
+    external: true
